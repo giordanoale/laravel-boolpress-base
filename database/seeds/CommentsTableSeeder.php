@@ -14,8 +14,18 @@ class CommentsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $post = Post::where('published', 1)->get();
+        $posts = Post::where('published', 1)->get();
         
-        
+        foreach ($posts as $post) {
+            for ($i = 0; $i < rand(0, 3); $i++) {
+                $newComment = new Comment();
+                $newComment->posts_id = $post->id;
+                if( rand(0, 1)){
+                    $newComment->name = $faker->name(); 
+                }
+                $newComment->content = $faker->text();
+                $newComment->save(); 
+            }
+        }
     }
 }
